@@ -4,8 +4,10 @@ import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -22,6 +24,19 @@ import {
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  ArrowDown,
+  ArrowDown01,
+  ArrowDownIcon,
+  ChevronDown,
+} from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -35,6 +50,7 @@ export function PeopleDataTable<TData, TValue>({
   //local states for table functionality
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   // setting table data
   const table = useReactTable({
@@ -46,29 +62,75 @@ export function PeopleDataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
 
     //on action
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
 
     //updating state
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
     },
   });
 
   return (
     <div className="mb-20">
+      {/* table control options */}
+      <div className="flex justify-between items-center py-4">
+        {/* filter first name */}
+        <Input
+          placeholder="Filter First Name"
+          value={
+            (table.getColumn("first_name")?.getFilterValue() as string) || ""
+          }
+          onChange={(e) =>
+            table.getColumn("first_name")?.setFilterValue(e.target.value)
+          }
+          className="max-w-sm"
+        />
+
+        {/* column visibility */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              Columns <ChevronDown />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((selectedColumn) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={selectedColumn.id}
+                    className="capitalize"
+                    checked={selectedColumn.getIsVisible()}
+                    onCheckedChange={(value: boolean) => {
+                      selectedColumn.toggleVisibility(!!value);
+                    }}
+                  >
+                    {selectedColumn.id}
+                  </DropdownMenuCheckboxItem>
+                );
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
       {/* table */}
       <div className="rounded-md border">
-        <Table>
+        <Table className="text-center">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="text-center">
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext()
