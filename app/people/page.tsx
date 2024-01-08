@@ -1,18 +1,16 @@
-"use client";
-
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-
 import React from "react";
+import PeopleDataTable from "./PeopleDataTable";
+import { columns } from "./column";
+import { people } from "../data/people";
 
 type Props = {};
 
 const People = (props: Props) => {
-  return <div>People</div>;
+  return (
+    <div className="w-[90%] mx-auto">
+      <PeopleDataTable columns={columns} data={people} />
+    </div>
+  );
 };
 
 export default People;

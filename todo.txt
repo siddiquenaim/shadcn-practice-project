@@ -16,7 +16,7 @@
 - learn how to work for clicking outside without using window or document (couldn't do it)
 - https://ui.shadcn.com/docs/components/ -- explore 
 - explore typescript
-- make the entire table with shadcn
+- make the entire table with shadcn (https://github.com/shadcn-ui/ui/blob/main/apps/www/app/examples/tasks/components/data-table.tsx)
 
 
 
