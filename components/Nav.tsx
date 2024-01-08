@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 const NavBar = () => {
   return (
@@ -17,7 +18,10 @@ const NavBar = () => {
       </div>
       {/* buttons */}
       <div>
-        <Button>Enroll</Button>
+        <Link href="table">
+          {" "}
+          <Button>Table</Button>
+        </Link>
       </div>
     </div>
   );
