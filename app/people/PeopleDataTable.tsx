@@ -128,9 +128,6 @@ export function PeopleDataTable<TData, TValue>({
           onChange={(e) => {
             handleFilter(e.target.value, "first_name");
           }}
-          // onChange={(e) =>
-          //   table.getColumn("first_name")?.setFilterValue(e.target.value)
-          // }
           className="max-w-sm"
         />
 

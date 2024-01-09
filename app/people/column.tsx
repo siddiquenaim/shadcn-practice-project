@@ -6,6 +6,7 @@ import DropDownCopy from "@/components/custom/DropDownCopy";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import MoneyComponent from "@/components/custom/MoneyComponent";
 
 export const columns: ColumnDef<Person>[] = [
   {
@@ -75,10 +76,18 @@ export const columns: ColumnDef<Person>[] = [
       return <div>{formatted}</div>;
     }, //cell formatting
   },
-  {
-    accessorKey: "money",
-    header: "Money",
-  },
+  // {
+  //   accessorKey: "money",
+  //   header: "Money",
+  //   cell: ({ row }) => {
+  //     return (
+  //       <div>
+  //         <MoneyComponent row={row} />
+  //       </div>
+  //     );
+  //   },
+  // },
+
   {
     id: "action",
     header: "Copy Text",
