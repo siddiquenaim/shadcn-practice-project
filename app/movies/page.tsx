@@ -6,7 +6,7 @@ import Movies from "./Movies";
 const page = () => {
   return (
     <div className="container py-10 mx-auto">
-      <h1 className="text-center text-2xl font-semibold">Movies Page</h1>
+      <h1 className="text-center text-3xl font-semibold">Movies</h1>
       <Movies moviesColumn={moviesColumn} movies={movies} />
     </div>
   );

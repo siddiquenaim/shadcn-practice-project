@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ColumnDef,
   getCoreRowModel,
@@ -28,7 +28,7 @@ export function Movies<MData, MValue>({
   movies,
 }: MoviesProps<MData, MValue>) {
   // react table set up
-  const table = useReactTable({
+  const allMovies = useReactTable({
     columns: moviesColumn,
     data: movies,
 
@@ -36,12 +36,16 @@ export function Movies<MData, MValue>({
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  useEffect(() => {
+    allMovies.setPageSize(12);
+  }, [allMovies]);
+
   return (
     <div className="mt-10 grid grid-cols-1 lg:grid-cols-4 gap-5">
-      {table.getRowModel().rows.map((row) => (
+      {allMovies.getRowModel().rows.map((row) => (
         // row.getVisibleCells().map((cell) => (
         <Card key={row.id} className="flex flex-col items-center">
-          <CardHeader>
+          <CardHeader className="text-center">
             <CardTitle>{row.original.title}</CardTitle>
             <CardDescription>Genre: {row.original.genre}</CardDescription>
           </CardHeader>
