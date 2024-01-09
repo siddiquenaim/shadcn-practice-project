@@ -24,7 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -34,6 +34,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import { downLoadToExcel } from "@/lib/xlsx";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -52,23 +53,23 @@ export function PeopleDataTable<TData, TValue>({
 
   // setting table data
   const table = useReactTable({
-    //fetching data
+    //data and column to generate table
     data,
     columns,
 
-    //loading functions
+    //table core functions
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
 
-    //on action
+    //on states change
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
 
-    //updating state
+    //update state
     state: {
       sorting,
       columnFilters,
@@ -76,6 +77,8 @@ export function PeopleDataTable<TData, TValue>({
       rowSelection,
     },
   });
+
+  useEffect(() => {}, []);
 
   return (
     <div className="mb-20">
@@ -93,35 +96,42 @@ export function PeopleDataTable<TData, TValue>({
           className="max-w-sm"
         />
 
-        {/* column visibility */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((selectedColumn) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={selectedColumn.id}
-                    className="capitalize"
-                    checked={selectedColumn.getIsVisible()}
-                    onCheckedChange={(value: boolean) => {
-                      selectedColumn.toggleVisibility(!!value);
-                    }}
-                  >
-                    {selectedColumn.id}
-                  </DropdownMenuCheckboxItem>
+        <div className="flex gap-3">
+          {/* export to excel */}
+          <Button variant="default" onClick={() => downLoadToExcel()}>
+            Export To Excel
+          </Button>
 
-                  // The !!value expression coerces the boolean value to its boolean equivalent (true or false), ensuring it's a valid argument for toggleVisibility (a boolean value).
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          {/* column visibility */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                Columns <ChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((selectedColumn) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={selectedColumn.id}
+                      className="capitalize"
+                      checked={selectedColumn.getIsVisible()}
+                      onCheckedChange={(value: boolean) => {
+                        selectedColumn.toggleVisibility(!!value);
+                      }}
+                    >
+                      {selectedColumn.id}
+                    </DropdownMenuCheckboxItem>
+
+                    // The !!value expression coerces the boolean value to its boolean equivalent (true or false), ensuring it's a valid argument for toggleVisibility (a boolean value).
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       {/* table */}

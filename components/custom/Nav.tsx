@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { ModeToggle } from "./ThemeToggle";
 
 const NavBar = () => {
   return (
@@ -20,9 +21,9 @@ const NavBar = () => {
         </Link>
       </div>
       {/* buttons */}
-      <div>
+      <div className="flex items-center gap-3">
+        <ModeToggle />
         <Link href="people">
-          {" "}
           <Button>Table</Button>
         </Link>
       </div>
