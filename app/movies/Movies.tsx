@@ -4,9 +4,11 @@ import React, { useEffect, useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
+  SortingState,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -21,6 +23,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ArrowUpDown } from "lucide-react";
 
 interface MoviesProps<MData, MValue> {
   moviesColumn: ColumnDef<MData, MValue>[];
@@ -37,6 +40,7 @@ export function Movies<MData, MValue>({
 
   //local states
   const [filters, setFilters] = useState<ColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   // react table set up
   const allMovies = useReactTable({
@@ -46,11 +50,14 @@ export function Movies<MData, MValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
 
     onColumnFiltersChange: setFilters,
+    onSortingChange: setSorting,
 
     state: {
       columnFilters: filters,
+      sorting,
     },
   });
 
@@ -84,14 +91,26 @@ export function Movies<MData, MValue>({
   return (
     <div className="mt-10">
       {/*  filtering */}
-      <div>
+      <div className="flex justify-center gap-5">
         <Input
-          className="max-w-sm mx-auto text-center text-xl"
+          className="max-w-sm text-center text-xl"
           placeholder="Filter Movies"
           onChange={(e) => {
             handleFilter(e.target.value, "title");
           }}
         ></Input>
+
+        <Button
+          onClick={() => {
+            allMovies
+              .getColumn("title")
+              ?.toggleSorting(
+                allMovies.getColumn("title")?.getIsSorted() === "asc"
+              );
+          }}
+        >
+          <span>Sort By Name</span> <ArrowUpDown className="h-4 w-4 ml-2" />
+        </Button>
       </div>
 
       {/* all movies */}
