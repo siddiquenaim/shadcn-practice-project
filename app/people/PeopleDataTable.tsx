@@ -116,7 +116,7 @@ export function PeopleDataTable<TData, TValue>({
   };
 
   return (
-    <div className="mb-20">
+    <div className="mb-20 mt-10">
       {/* table control options */}
       <div className="flex justify-between items-center py-4">
         {/* filter first name */}
