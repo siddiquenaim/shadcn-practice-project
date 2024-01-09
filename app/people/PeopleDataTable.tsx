@@ -3,7 +3,6 @@
 import {
   ColumnDef,
   ColumnFiltersState,
-  RowSelectionInstance,
   RowSelectionState,
   SortingState,
   VisibilityState,
@@ -35,6 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { downLoadToExcel } from "@/lib/xlsx";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,6 +45,11 @@ export function PeopleDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  //router and paths
+  const router = useRouter();
+  const path = usePathname();
+  const searchParams = useSearchParams();
+
   //local states for table functionality
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -78,7 +83,37 @@ export function PeopleDataTable<TData, TValue>({
     },
   });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    table.setColumnVisibility({
+      date_of_birth: false,
+      id: false,
+      email: false,
+    });
+  }, [table]);
+
+  //useEffect for filters
+  useEffect(() => {
+    const initialFilters = searchParams.get("filters");
+
+    if (initialFilters) {
+      const parsedData = JSON.parse(initialFilters);
+      const id = Object.keys(parsedData)[0];
+      const value = parsedData[id];
+
+      table.getColumn(id)?.setFilterValue(value);
+    }
+  }, [searchParams, table]);
+
+  //set search params in router
+  const handleFilter = (value: string, id: string) => {
+    const urlParams = new URLSearchParams(searchParams);
+    urlParams.set("filters", JSON.stringify({ [id]: value }));
+
+    //set search query
+    const validQuery = urlParams.size > 0 ? "?" + urlParams.toString() : "";
+
+    router.push(path + validQuery);
+  };
 
   return (
     <div className="mb-20">
@@ -90,9 +125,12 @@ export function PeopleDataTable<TData, TValue>({
           value={
             (table.getColumn("first_name")?.getFilterValue() as string) || ""
           }
-          onChange={(e) =>
-            table.getColumn("first_name")?.setFilterValue(e.target.value)
-          }
+          onChange={(e) => {
+            handleFilter(e.target.value, "first_name");
+          }}
+          // onChange={(e) =>
+          //   table.getColumn("first_name")?.setFilterValue(e.target.value)
+          // }
           className="max-w-sm"
         />
 
