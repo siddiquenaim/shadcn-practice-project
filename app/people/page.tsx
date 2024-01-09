@@ -7,7 +7,7 @@ type Props = {};
 
 const People = (props: Props) => {
   return (
-    <div className="w-[90%] mx-auto">
+    <div className="container py-10 mx-auto">
       <PeopleDataTable columns={columns} data={people} />
     </div>
   );

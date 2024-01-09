@@ -3,6 +3,8 @@
 import {
   ColumnDef,
   ColumnFiltersState,
+  RowSelectionInstance,
+  RowSelectionState,
   SortingState,
   VisibilityState,
   flexRender,
@@ -46,6 +48,7 @@ export function PeopleDataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
   // setting table data
   const table = useReactTable({
@@ -63,12 +66,14 @@ export function PeopleDataTable<TData, TValue>({
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
 
     //updating state
     state: {
       sorting,
       columnFilters,
       columnVisibility,
+      rowSelection,
     },
   });
 
@@ -162,36 +167,43 @@ export function PeopleDataTable<TData, TValue>({
         </Table>
       </div>
 
-      {/* pagination */}
-      <div className="flex justify-end space-x-2 my-2">
-        <Button
-          onClick={() => table.setPageIndex(0)}
-          disabled={!table.getCanPreviousPage()}
-          variant="outline"
-        >
-          {`<<`}
-        </Button>
-        <Button
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-          variant="outline"
-        >
-          Previous
-        </Button>
-        <Button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-          variant="outline"
-        >
-          Next
-        </Button>
-        <Button
-          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-          disabled={!table.getCanNextPage()}
-          variant="outline"
-        >
-          {`>>`}
-        </Button>
+      {/* pagination and row selection text */}
+      <div className="flex justify-between">
+        <div className="my-2">
+          {table.getFilteredSelectedRowModel().rows.length} of {` `}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        {/* pagination */}
+        <div className="flex justify-end space-x-2 my-2">
+          <Button
+            onClick={() => table.setPageIndex(0)}
+            disabled={!table.getCanPreviousPage()}
+            variant="outline"
+          >
+            {`<<`}
+          </Button>
+          <Button
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            variant="outline"
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            variant="outline"
+          >
+            Next
+          </Button>
+          <Button
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            disabled={!table.getCanNextPage()}
+            variant="outline"
+          >
+            {`>>`}
+          </Button>
+        </div>
       </div>
     </div>
   );

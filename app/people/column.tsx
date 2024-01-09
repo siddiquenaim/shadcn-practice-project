@@ -28,6 +28,8 @@ export const columns: ColumnDef<Person>[] = [
         ></Checkbox>
       );
     },
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     accessorKey: "id",
