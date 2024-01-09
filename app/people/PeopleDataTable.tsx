@@ -31,12 +31,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  ArrowDown,
-  ArrowDown01,
-  ArrowDownIcon,
-  ChevronDown,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -116,6 +111,8 @@ export function PeopleDataTable<TData, TValue>({
                   >
                     {selectedColumn.id}
                   </DropdownMenuCheckboxItem>
+
+                  // The !!value expression coerces the boolean value to its boolean equivalent (true or false), ensuring it's a valid argument for toggleVisibility (a boolean value).
                 );
               })}
           </DropdownMenuContent>
