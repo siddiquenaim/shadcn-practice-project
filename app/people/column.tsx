@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import MoneyComponent from "@/components/custom/MoneyComponent";
+import { Movie } from "../data/movies";
 
 export const columns: ColumnDef<Person>[] = [
   {
@@ -100,5 +101,24 @@ export const columns: ColumnDef<Person>[] = [
         </div>
       );
     }, //cell action
+  },
+];
+
+export const moviesColumn: ColumnDef<Movie>[] = [
+  {
+    accessorKey: "title",
+    header: "Title",
+  },
+  {
+    accessorKey: "genre",
+    header: "Genre",
+  },
+  {
+    accessorKey: "image",
+    header: "Image",
+  },
+  {
+    accessorKey: "release_date",
+    header: "Release Date",
   },
 ];
