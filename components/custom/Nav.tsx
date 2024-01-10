@@ -23,6 +23,9 @@ const NavBar = () => {
       {/* buttons */}
       <div className="flex items-center gap-3">
         <ModeToggle />
+        <Link href="register">
+          <Button>Register</Button>
+        </Link>
         <Link href="movies">
           <Button>Movies</Button>
         </Link>
