@@ -33,3 +33,6 @@ It ensures that the toggleVisibility method is always called with a valid boolea
 While not strictly necessary in this specific case, using !!value is often considered a good practice for defensive programming.
 It helps prevent potential issues that could arise from unexpected value types or data transformations.
 It can make code more robust and easier to maintain, especially in larger codebases where data flow might be less predictable.
+
+
+--- zod: zod is a typescript library that does schema validation for us, so we can define what style we want and zod can ensure that the input is valid.
