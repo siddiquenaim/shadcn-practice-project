@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -77,9 +78,24 @@ const RegisterForm = () => {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-3 relative overflow-x-hidden"
+            >
               {/* first page */}
-              <div className={cn("space-y-3", { hidden: formStep === 1 })}>
+              <motion.div
+                className={cn("space-y-3", {
+                  // hidden: formStep === 1,
+                })}
+                //formStep === 0 > translate-x: 0
+                //formStep === 1 > translate-x: '-100%
+                animate={{
+                  translateX: `-${formStep * 100}%`,
+                }}
+                transition={{
+                  ease: "easeInOut",
+                }}
+              >
                 {/* name */}
                 <FormField
                   control={form.control}
@@ -154,9 +170,21 @@ const RegisterForm = () => {
                     </FormItem>
                   )}
                 />
-              </div>
+              </motion.div>
               {/* second page */}
-              <div className={cn("space-y-3", { hidden: formStep === 0 })}>
+              <motion.div
+                className={cn(
+                  "space-y-3 absolute top-0 left-0 right-0"
+                  // { hidden: formStep === 0 }
+                )}
+                animate={{
+                  translateX: `${100 - formStep * 100}%`,
+                }}
+                style={{ translateX: `${100 - formStep * 200}%` }}
+                transition={{
+                  ease: "easeInOut",
+                }}
+              >
                 {/* password */}
                 <FormField
                   control={form.control}
@@ -193,7 +221,7 @@ const RegisterForm = () => {
                     </FormItem>
                   )}
                 />
-              </div>
+              </motion.div>
               <div className="flex gap-2">
                 <Button
                   className={cn("", { hidden: formStep === 0 })}
