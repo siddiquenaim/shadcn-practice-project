@@ -36,3 +36,15 @@ It can make code more robust and easier to maintain, especially in larger codeba
 
 
 --- zod: zod is a typescript library that does schema validation for us, so we can define what style we want and zod can ensure that the input is valid.
+
+
+- what is typeScript? why typeScript?
+typescript is a superset of JavaScript
+- type and interface
+- difference between type and interface
+- primitive type declaration
+- object type declaration
+- array of object type declaration
+- optional type
+- function type declaration
+- generic type
