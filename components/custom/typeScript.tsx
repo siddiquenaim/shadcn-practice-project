@@ -92,12 +92,13 @@ const stringBox: Box<string> = { value: "Hello, TypeScript" };
 
 // to avoid any type, the generic type was introduced.
 
-// example:
+// example-1:
 
 function convertToArray<T>(input: T): T[] {
   return [input];
 }
 
+//------2
 const arr = [11, 88, 44];
 
 function getIndexOfArrayItem<T>(arr: T[], item: T) {
@@ -105,3 +106,10 @@ function getIndexOfArrayItem<T>(arr: T[], item: T) {
 }
 
 getIndexOfArrayItem(arr, 88);
+
+//------3
+function pairArray<T, K>(a: T, b: K): [T, K] {
+  return [a, b];
+}
+
+pairArray("hello", 10);
