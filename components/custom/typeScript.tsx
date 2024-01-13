@@ -89,3 +89,19 @@ const stringBox: Box<string> = { value: "Hello, TypeScript" };
 // In the `Box` example, `T` is a generic type parameter that can be replaced with any type
 // when creating an instance of `Box`.
 // Generics provide flexibility to create reusable and type-safe components.
+
+// to avoid any type, the generic type was introduced.
+
+// example:
+
+function convertToArray<T>(input: T): T[] {
+  return [input];
+}
+
+const arr = [11, 88, 44];
+
+function getIndexOfArrayItem<T>(arr: T[], item: T) {
+  return arr.findIndex((i) => i === item);
+}
+
+getIndexOfArrayItem(arr, 88);
