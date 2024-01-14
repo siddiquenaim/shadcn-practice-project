@@ -1,6 +1,4 @@
-import React from "react";
-
-const wait = (duration: number) => {
+const wait = (duration: number): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, duration));
 };
 
