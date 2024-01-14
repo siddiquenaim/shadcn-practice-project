@@ -1,4 +1,5 @@
 "use client";
+import TanStack from "@/components/custom/Tanstack";
 import { useCounterStore } from "./store";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
         <button onClick={() => incrementAsync()}>IncrementAsync</button>
         <button onClick={() => decrement()}>Decrement</button>
       </div>
+      <TanStack />
     </main>
   );
 }

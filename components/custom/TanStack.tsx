@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import wait from "./wait";
 
 const Posts: {
   id: number;
@@ -16,7 +17,12 @@ const Posts: {
 ];
 
 const TanStack = () => {
-  return <div>TanStack Query</div>;
+  const postQuery = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => wait(1000).then(() => [...Posts]),
+  });
+
+  return <div className="text-2xl text-white">TanStack Query</div>;
 };
 
 export default TanStack;
