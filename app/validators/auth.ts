@@ -15,3 +15,9 @@ export const registerSchema = z.object({
 //--- zod: zod is a typescript library that does schema validation for us, so we can define what style we want and zod can ensure that the input is valid.
 
 //so this schema tells the how the form is gonna look like
+
+export const formSchema = z.object({
+  name: z.string().min(5).max(30, { message: "Your name is too long" }),
+  email: z.string().email(),
+  phone: z.string().min(11).max(11),
+});
