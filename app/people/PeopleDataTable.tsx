@@ -102,6 +102,7 @@ export function PeopleDataTable<TData, TValue>({
 
       table.getColumn(id)?.setFilterValue(value);
     }
+    if (!initialFilters) table.resetColumnFilters(true);
   }, [searchParams, table]);
 
   //set search params in router

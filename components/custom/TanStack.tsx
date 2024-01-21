@@ -34,8 +34,8 @@ const TanStack = () => {
       );
     },
     onSuccess: () => {
-      postQuery.refetch();
-      // queryClient.invalidateQueries(["posts"]);
+      // postQuery.refetch();
+      queryClient.invalidateQueries(["posts"]);
     },
   });
 
