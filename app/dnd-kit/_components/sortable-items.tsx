@@ -20,7 +20,11 @@ const style = {
 };
 
 export const Item = (props: Props) => {
-  return <div style={style}>{props.meta}</div>;
+  return <div style={style}>{props?.meta}</div>;
+};
+
+export const draggingItem = (props: Props) => {
+  return <div style={style}>{props.id}</div>;
 };
 
 const SortableItems = (props: Props) => {
@@ -34,7 +38,7 @@ const SortableItems = (props: Props) => {
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      <Item id={props.id} meta={props.meta}></Item>
+      <Item id={props?.id} meta={props?.meta}></Item>
     </div>
   );
 };

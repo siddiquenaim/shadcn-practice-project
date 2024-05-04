@@ -90,6 +90,8 @@ export default function MultipleDragDrop() {
       const overIndex = overItems.indexOf(overId);
 
       let newIndex;
+
+      // not understanding this
       if (overId in prev) {
         // If the overId exists as a key in the previous state, it means we're at the root droppable of a container
         // In this case, set the newIndex to the length of overItems plus 1

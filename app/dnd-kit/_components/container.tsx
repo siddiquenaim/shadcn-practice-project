@@ -15,6 +15,8 @@ type Props = {
 const Container = (props: Props) => {
   const { id, items } = props;
 
+  // console.log(items);
+
   const { setNodeRef } = useDroppable({
     id: id,
   });
@@ -28,9 +30,9 @@ const Container = (props: Props) => {
       <div ref={setNodeRef} className="p-3 m-3 flex-1 bg-[#dadada]">
         {items.map((id) => (
           <SortableItems
-            key={id.id}
-            meta={id.meta}
-            id={id.id || ""}
+            key={id?.id}
+            meta={id?.meta}
+            id={id?.id || ""}
           ></SortableItems>
         ))}
       </div>

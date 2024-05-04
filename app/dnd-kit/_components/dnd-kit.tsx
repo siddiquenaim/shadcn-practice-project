@@ -47,7 +47,7 @@ export default function MultipleDragDrop() {
     }
 
     for (const key in items) {
-      if (items[key].some((item) => item.id === id)) {
+      if (items[key].some((item) => item?.id === id)) {
         return key;
       }
     }
@@ -118,7 +118,7 @@ export default function MultipleDragDrop() {
       return {
         ...prev,
         [activeContainer]: [
-          ...prev[activeContainer].filter((item) => item !== active.id),
+          ...prev[activeContainer].filter((item) => item.id !== active.id),
         ],
         [overContainer]: [
           ...prev[overContainer].slice(0, newIndex),
